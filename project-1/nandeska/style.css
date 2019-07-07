@@ -1,0 +1,74 @@
+.container{
+/*	display: flex;*/
+	width: 100%;
+	margin: 0 auto;
+}
+
+h2, p, .top-section, .bottom-section {
+	text-align: center;
+}
+
+button {
+	margin: 0 auto;
+}
+
+#gameboard.a {
+	visibility: visible;
+}
+
+#gameboard.b {
+	visibility: hidden;
+}
+
+.object-image {
+	border: 2px solid grey;
+	width: 180px;
+	height: 180px;
+	text-align: center;
+	margin: 0 auto;
+	padding-bottom: 0;
+
+}
+
+.img {
+	width: 150px;
+	height: 150px;
+	margin: 0 auto;
+}
+
+.gameboard {
+	width: 700px;
+	height: 450px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin: 0 auto;
+
+}
+
+.square {
+	width: 8%;
+	height: 50px;
+	border: 2px solid blue;
+	margin: 2px;
+	font-size: 24px;
+	font-weight: bold;
+	text-align: center;
+}
+
+#player-guess {
+	display: inline-block;
+	background-color: grey;
+	border: 2px solid red;
+	width: 200px;
+	height: 50px;
+}
+
+p {
+	display: inline;
+}
+
+#next{
+	float: right;
+}
