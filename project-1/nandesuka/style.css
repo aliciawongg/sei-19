@@ -4,20 +4,8 @@
 	margin: 0 auto;
 }
 
-h2, p, .top-section, .bottom-section {
+h2, h6, .top-section, .bottom-section {
 	text-align: center;
-}
-
-button {
-	margin: 0 auto;
-}
-
-#gameboard.a {
-	visibility: visible;
-}
-
-#gameboard.b {
-	visibility: hidden;
 }
 
 .object-image {
@@ -27,7 +15,6 @@ button {
 	text-align: center;
 	margin: 0 auto;
 	padding-bottom: 0;
-
 }
 
 .img {
@@ -48,7 +35,7 @@ button {
 }
 
 .square {
-	width: 8%;
+	width: 9%;
 	height: 50px;
 	border: 2px solid blue;
 	margin: 2px;
@@ -58,17 +45,38 @@ button {
 }
 
 #player-guess {
+	visibility: hidden;
 	display: inline-block;
 	background-color: grey;
 	border: 2px solid red;
 	width: 200px;
 	height: 50px;
-}
-
-p {
-	display: inline;
+	font-size: 24px;
+	font-weight: bold;
+	text-align: center;
 }
 
 #next{
+	visibility: hidden;
 	float: right;
+}
+
+#start{
+	text-align: center;
+}
+
+h6 {
+visibility: hidden;
+}
+
+#displaymsg {
+	font-weight: bold;
+	font-size: 16px;
+	visibility: hidden;
+	background-color: grey;
+	border: 2px solid red;
+	width: 370px;
+	height: 30px;
+	text-align: center;
+	margin: 0 auto;
 }

@@ -146,17 +146,11 @@ var kataChar = {
     70: 'ヲ',
     71: 'ン',
     72: 'ー',
-    73: '',
-    74: '',
-    75: '',
-    76: '',
-    77: '',
+
 };
 
 var objectImages = [
-//level1
 ['images/ramune.jpg', 'images/ramen.png','images/anime.jpg'],
-//level 2
 ['images/america.png','images/konbini.jpg','images/uniqlo.jpg']
 //level 3
 // []
@@ -165,27 +159,31 @@ var objectImages = [
 var wordsArray = [
 [['ra','mu','ne'], ['ra','me','n'] , ['a','ni','me']],
 [['a','me','li','ca'], ['ko','n','bi','ni'], ['u','ni','ku', 'ro']] ];
+
 var playerGuess =[];
 var currentWord;
+var currentImage;
 var currentLevel;
-var i = 0;
+var numTries = 0;
+var correctLetter = 0;
 
 //function to loop and display images and set current word
 function showImage() {
+        var i = 0;
         var j = 0;
-        var currentImage = document.createElement('img');
+        currentImage = document.createElement('img');
         currentImage.src = objectImages[i][j];
         document.querySelector('.object-image').appendChild(currentImage);
         currentImage.className = 'img';
         currentWord = wordsArray[i][j];
         console.log(currentWord);
-        i++;
-        j++;
 };
 
-//function to display the squares add event listener
+//function to display the squares and add event listener
 var showBoard = function() {
-    for (var k = 1; k < 78; k++) {
+    document.querySelector('h6').style.visibility = 'visible';
+    document.querySelector('#player-guess').style.visibility = 'visible';
+    for (var k = 1; k < 73; k++) {
         var square = document.createElement('div');
         console.log('create square ' +k);
         square.className = 'square';
@@ -194,6 +192,7 @@ var showBoard = function() {
         console.log(square.value);
         document.querySelector('.gameboard').appendChild(square);
         square.innerHTML = kataChar[k];
+        console.log(kataChar[k]);
         square.addEventListener('click', checkLetter);
     }
 };
@@ -201,44 +200,69 @@ var showBoard = function() {
 //click start button to display image, set word show board
 document.querySelector('#start').addEventListener('click', showImage);
 document.querySelector('#start').addEventListener('click', showBoard);
-//make hidden use xx.className
 
-//function to check letter selected
+//function to check if letter selected is correct or wrong
 var checkLetter = function() {
-    console.log('clicked sq ');
+    console.log('clicked sq');
+    console.log(currentWord);
+    numTries++;
+    console.log('number of tries ' +numTries);
+//show next button to proceed to next word if number of tries more than number of letters
+    if (numTries > currentWord.length+1) {
+        console.log('lose');
+        document.querySelector('#next').style.visibility = 'visible';
+        document.querySelector('#displaymsg').style.visibility = 'visible';
+        document.querySelector('#displaymsg').innerHTML = 'Number of attempts exceeded! Try next word.';
+    }
+    else {
+        var playerLetter = this.value;
+        console.log('player selected: ' + playerLetter);
+        for (var m = 0; m < currentWord.length; m++)
+            if (playerLetter === currentWord[m]) {
+                correctLetter = correctLetter + 1;
+                console.log('correct letter(s): '+correctLetter);
+                playerGuess.push(playerLetter);
+                console.log('player guess: ' + playerGuess);
+                document.querySelector('#player-guess').innerHTML += this.textContent;
 
-// increase numTries
-//     if (  numTries > wordbank [ i ] [ j ]. length) {
-//         show next button;
-//     }
-//     else {
-//         var letterchosen = square clicked
-
-//         for ( j = 0; j < word.length; j++)
-//             if (letterchosen === wordbank [ i ] [ j ] ) {
-//                 show correct button;
-//                 increase correct letter count ++,
-//                 push the letterchosen to player guess array,
-//                 innerHTML the correct ‘kata’ to player guess box,
-
-//             if no, show wrong button.
-//     }
-
-
+                if (correctLetter === currentWord.length) {
+                    console.log('win');
+                    document.querySelector('#next').style.visibility = 'visible';
+                    document.querySelector('#displaymsg').style.visibility = 'visible';
+                    document.querySelector('#displaymsg').innerHTML = 'Correct word 🥳';
+                }
+            }
+            else if (playerLetter !== currentWord[m]) {
+                console.log('nope');
+                // document.querySelector('#displaymsg').style.visibility = 'visible';
+                // document.querySelector('#displaymsg').innerHTML = 'Nope 👻';
+            }
+    }
 };
-// //add event listener for every square in html
-// for(i = 0; i < 9; i++) {
-//     sqArray[i].addEventListener('click', clickSq);
-// }
 
-//show if word guessed is correct or wrong
-// var showWordResult = function() {
-//     document.querySelector('#result');
+//clear and show
+document.querySelector('#next').addEventListener('click', changeImage);
 
-//  if (true){
-//     .innerHTML = 'Correct';
-//  }
-//  else {
-//     .innerHTML = 'Wrong';
-//  }
-// }
+function changeImage() {
+        var a = 0;
+        var b = 0;
+        if (b < 3) {
+            b = b + 1;
+            currentImage.src = objectImages[a][b];
+            currentWord = wordsArray[a][b];
+            console.log(currentWord);
+            document.querySelector('#next').style.visibility = 'hidden';
+            document.querySelector('#displaymsg').style.visibility = 'hidden';
+            numTries = 0;
+            correctLetter = 0;
+            playerGuess =[];
+            document.querySelector('#player-guess').innerHTML = '';
+        }
+        // else {
+        //     a = a + 1;
+        //     document.querySelector('.object-image').src = objectImages[a][b];
+        //     currentWord = wordsArray[a][b];
+        //     console.log(currentWord);
+        //     b = b + 1;
+        // }
+};
