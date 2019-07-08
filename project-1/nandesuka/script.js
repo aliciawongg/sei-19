@@ -150,15 +150,16 @@ var kataChar = {
 };
 
 var objectImages = [
-['images/ramune.jpg', 'images/ramen.png','images/anime.jpg'],
-['images/america.png','images/konbini.jpg','images/uniqlo.jpg']
+['images/ramune.jpg','images/anime2.jpg','images/salad.jpg','images/hotel2.png','images/cake.jpg'],
+['images/america.png','images/ramen.png','images/konbini.jpg','images/uniqlo.jpg','images/ketai.jpg','images/lavender.jpg']
 //level 3
 // []
 ];
 
 var wordsArray = [
-[['ra','mu','ne'], ['ra','me','n'] , ['a','ni','me']],
-[['a','me','ri','ka'], ['ko','n','bi','ni'], ['yu','ni','ku','ro']] ];
+[['ra','mu','ne'],['a','ni','me'],['sa','ra','da'],['ho','te','ru'],['ke','-','ki']],
+[['a','me','ri','ka'],['ra','-','me','n'],['ko','n','bi','ni'],['yu','ni','ku','ro'], ['ke','-','ta','i'],['ra','be','n','da','-']]
+];
 
 var playerGuess =[];
 var currentWord;
@@ -169,21 +170,19 @@ var correctLetter = 0;
 var m = 0;
 var b = 0;
 
-//function to loop and display images and set current word
+//function to show first image and set first current word
 function showImage() {
-        var i = 0;
-        var j = 0;
         currentImage = document.createElement('img');
-        currentImage.src = objectImages[i][j];
+        currentImage.src = objectImages[0][0];
         document.querySelector('.object-image').appendChild(currentImage);
         currentImage.className = 'img';
-        currentWord = wordsArray[i][j];
+        currentWord = wordsArray[0][0];
         console.log(currentWord);
 };
 
 //function to display the squares and add event listener
 var showBoard = function() {
-    document.querySelector('h6').style.visibility = 'visible';
+    document.querySelector('#hintbutton').style.visibility = 'visible';
     document.querySelector('#player-guess').style.visibility = 'visible';
     for (var k = 1; k < 73; k++) {
         var square = document.createElement('div');
@@ -204,7 +203,6 @@ document.querySelector('#start').addEventListener('click', showImage);
 document.querySelector('#start').addEventListener('click', showBoard);
 
 //function to check if letter selected is correct or wrong
-
 var checkLetter = function() {
     document.querySelector('#start').style.visibility = 'hidden';
     console.log('clicked sq');
@@ -216,7 +214,7 @@ var checkLetter = function() {
         console.log('lose');
         document.querySelector('#next').style.visibility = 'visible';
         document.querySelector('#displaymsg').style.visibility = 'visible';
-        document.querySelector('#displaymsg').innerHTML = 'Number of attempts exceeded! Try next word.';
+        document.querySelector('#displaymsg').innerHTML = 'too many tries! Go on to next word.';
     }
     else {
         var playerLetter = this.value;
@@ -235,14 +233,14 @@ var checkLetter = function() {
                     console.log('win');
                     document.querySelector('#next').style.visibility = 'visible';
                     document.querySelector('#displaymsg').style.visibility = 'visible';
-                    document.querySelector('#displaymsg').innerHTML = 'Correct word 🥳';
+                    document.querySelector('#displaymsg').innerHTML = 'you got it!';
                 }
             }
 //when wrong letter is guesssed
             else {
                 console.log('nope');
                 document.querySelector('#displaymsg').style.visibility = 'visible';
-                document.querySelector('#displaymsg').innerHTML = 'Nope 👻';
+                document.querySelector('#displaymsg').innerHTML = 'nope!';
             }
 //check if the entire word is guessed correctly
         }
@@ -250,19 +248,26 @@ var checkLetter = function() {
             console.log('win');
             document.querySelector('#next').style.visibility = 'visible';
             document.querySelector('#displaymsg').style.visibility = 'visible';
-            document.querySelector('#displaymsg').innerHTML = 'Correct word 🥳';
+            document.querySelector('#displaymsg').innerHTML = 'you got it!';
         }
     }
 };
 
-//clear and show
-document.querySelector('#next').addEventListener('click', changeImage);
+//function to show hint
+var showHint = function() {
+    console.log('it works');
+    console.log(currentWord);
+    document.querySelector('#hint').innerHTML = currentWord.join('');
+};
 
-//show next image and set word for Level 1
-function changeImage() {
+document.querySelector('#hintbutton').addEventListener('click', showHint);
+
+//show next image and set next word in current level when next button is clicked
+var changeImage = function() {
         m = 0;
         b = b + 1;
         console.log('b = '+b);
+        document.querySelector('#hint').innerHTML = '';
         if (b < objectImages[currentLevel-1].length) {
             console.log(currentLevel);
             currentImage.src = objectImages[currentLevel-1][b];
@@ -275,13 +280,14 @@ function changeImage() {
             playerGuess =[];
             document.querySelector('#player-guess').innerHTML = '';
         }
-//check if complete current level and progress
+//check if complete current level and progress to next level
         else if(b === objectImages[currentLevel-1].length) {
             currentLevel++;
             console.log('current level' + currentLevel);
-            document.querySelector('#displaymsg').innerHTML = 'Progress to Level ' + currentLevel;
+            document.querySelector('#displaymsg').innerHTML = 'progress to level ' + currentLevel;
             document.querySelector('#player-guess').innerHTML = '';
-
             b = -1;
         }
 };
+
+document.querySelector('#next').addEventListener('click', changeImage);

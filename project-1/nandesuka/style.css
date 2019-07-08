@@ -14,20 +14,21 @@ body{
 	text-align: center;
 }
 
-h2{
-	font-family: 'Alegreya Sans SC', sans-serif;
-	color:#E08210;
-	text-transform: uppercase;
+#lastsect{
+	margin-top: 0px;
+	text-align: center;
 }
 
-h6 {
-	visibility: hidden;
-	font-family: 'Alegreya Sans SC', sans-serif;
+.title{
+	font-family: 'Krona One', sans-serif;
+	color:#E20377;
 	text-transform: uppercase;
+	font-size: 45px;
+
 }
 
 .object-image {
-	width: 300px;
+	width: 330px;
 	height: 280px;
 	text-align: center;
 	margin: 5px auto;
@@ -36,20 +37,34 @@ h6 {
 }
 
 .img {
-	width: 260px;
-	height: 210px;
+	width: 300px;
+	height: 250px;
 	margin: 5px auto;
+}
+
+#hint {
+/*	background-color: #FAF5E6;*/
+	display: inline;
+	font-family: 'Overpass', sans-serif;
+	text-transform: lowercase;
+	width: 100px;
+	height: 30px;
+	font-size: 16px;
+	text-align: left;
+	color: #0C8203;
+	font-style: italic;
 }
 
 #player-guess {
 	visibility: hidden;
 	display: inline-block;
-	background-color: grey;
+	background-color: #FAF5E6;
 	width: 150px;
-	height: 40px;
-	font-size: 24px;
-	font-weight: bold;
+	height: 45px;
+	font-size: 28px;
 	text-align: center;
+	color: #0563D0;
+	margin-top: 10px;
 }
 
 #displaymsg {
@@ -57,14 +72,15 @@ h6 {
 	text-transform: lowercase;
 	visibility: hidden;
 	font-weight: bold;
-	font-size: 16px;
+	font-size: 20px;
 	visibility: hidden;
-	background-color: grey;
-	border: 2px solid red;
+/*	background-color: grey;
+	border: 2px solid red;*/
 	width: 370px;
 	height: 30px;
 	text-align: center;
-	margin: 0 auto;
+	margin: 10px auto;
+	color: #E20377;
 }
 
 .gameboard {
@@ -75,23 +91,32 @@ h6 {
 	flex-wrap: wrap;
 	justify-content: center;
 	margin: 0 auto;
-
 }
 
 .square {
 	width: 9%;
 	height: 50px;
-	border: 1px solid #C26D95;
+	border: 1px solid #E08210;
 	border-radius: 10%;
 	margin: 2px;
-	font-size: 24px;
-	font-weight: bold;
+	color: #443D40;;
+	font-size: 26px;
+/*	font-weight: bold;*/
 	text-align: center;
+}
+
+.square:hover {
+  background-color: #E4FB43;
 }
 
 /*buttons*/
 #start{
 
+}
+
+#hintbutton {
+	visibility: hidden;
+	display: inline;
 }
 
 #next{
