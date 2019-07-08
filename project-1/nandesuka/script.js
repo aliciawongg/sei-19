@@ -158,14 +158,16 @@ var objectImages = [
 
 var wordsArray = [
 [['ra','mu','ne'], ['ra','me','n'] , ['a','ni','me']],
-[['a','me','li','ca'], ['ko','n','bi','ni'], ['u','ni','ku', 'ro']] ];
+[['a','me','ri','ka'], ['ko','n','bi','ni'], ['yu','ni','ku','ro']] ];
 
 var playerGuess =[];
 var currentWord;
 var currentImage;
-var currentLevel;
+var currentLevel = 1;;
 var numTries = 0;
 var correctLetter = 0;
+var m = 0;
+var b = 0;
 
 //function to loop and display images and set current word
 function showImage() {
@@ -193,7 +195,7 @@ var showBoard = function() {
         document.querySelector('.gameboard').appendChild(square);
         square.innerHTML = kataChar[k];
         console.log(kataChar[k]);
-        square.addEventListener('click', checkLetter);
+        square.addEventListener('click',checkLetter);
     }
 };
 
@@ -202,12 +204,14 @@ document.querySelector('#start').addEventListener('click', showImage);
 document.querySelector('#start').addEventListener('click', showBoard);
 
 //function to check if letter selected is correct or wrong
+
 var checkLetter = function() {
+    document.querySelector('#start').style.visibility = 'hidden';
     console.log('clicked sq');
     console.log(currentWord);
     numTries++;
     console.log('number of tries ' +numTries);
-//show next button to proceed to next word if number of tries more than number of letters
+//check if number of tries more than number of letters
     if (numTries > currentWord.length+1) {
         console.log('lose');
         document.querySelector('#next').style.visibility = 'visible';
@@ -217,14 +221,16 @@ var checkLetter = function() {
     else {
         var playerLetter = this.value;
         console.log('player selected: ' + playerLetter);
-        for (var m = 0; m < currentWord.length; m++)
+        if (correctLetter !== currentWord.length) {
+            // var m = 0;
             if (playerLetter === currentWord[m]) {
+                 document.querySelector('#displaymsg').innerHTML = '';
                 correctLetter = correctLetter + 1;
                 console.log('correct letter(s): '+correctLetter);
                 playerGuess.push(playerLetter);
                 console.log('player guess: ' + playerGuess);
                 document.querySelector('#player-guess').innerHTML += this.textContent;
-
+                m = m + 1;
                 if (correctLetter === currentWord.length) {
                     console.log('win');
                     document.querySelector('#next').style.visibility = 'visible';
@@ -232,24 +238,35 @@ var checkLetter = function() {
                     document.querySelector('#displaymsg').innerHTML = 'Correct word 🥳';
                 }
             }
-            else if (playerLetter !== currentWord[m]) {
+//when wrong letter is guesssed
+            else {
                 console.log('nope');
-                // document.querySelector('#displaymsg').style.visibility = 'visible';
-                // document.querySelector('#displaymsg').innerHTML = 'Nope 👻';
+                document.querySelector('#displaymsg').style.visibility = 'visible';
+                document.querySelector('#displaymsg').innerHTML = 'Nope 👻';
             }
+//check if the entire word is guessed correctly
+        }
+        else if (correctLetter === currentWord.length) {
+            console.log('win');
+            document.querySelector('#next').style.visibility = 'visible';
+            document.querySelector('#displaymsg').style.visibility = 'visible';
+            document.querySelector('#displaymsg').innerHTML = 'Correct word 🥳';
+        }
     }
 };
 
 //clear and show
 document.querySelector('#next').addEventListener('click', changeImage);
 
+//show next image and set word for Level 1
 function changeImage() {
-        var a = 0;
-        var b = 0;
-        if (b < 3) {
-            b = b + 1;
-            currentImage.src = objectImages[a][b];
-            currentWord = wordsArray[a][b];
+        m = 0;
+        b = b + 1;
+        console.log('b = '+b);
+        if (b < objectImages[currentLevel-1].length) {
+            console.log(currentLevel);
+            currentImage.src = objectImages[currentLevel-1][b];
+            currentWord = wordsArray[currentLevel-1][b];
             console.log(currentWord);
             document.querySelector('#next').style.visibility = 'hidden';
             document.querySelector('#displaymsg').style.visibility = 'hidden';
@@ -258,11 +275,13 @@ function changeImage() {
             playerGuess =[];
             document.querySelector('#player-guess').innerHTML = '';
         }
-        // else {
-        //     a = a + 1;
-        //     document.querySelector('.object-image').src = objectImages[a][b];
-        //     currentWord = wordsArray[a][b];
-        //     console.log(currentWord);
-        //     b = b + 1;
-        // }
+//check if complete current level and progress
+        else if(b === objectImages[currentLevel-1].length) {
+            currentLevel++;
+            console.log('current level' + currentLevel);
+            document.querySelector('#displaymsg').innerHTML = 'Progress to Level ' + currentLevel;
+            document.querySelector('#player-guess').innerHTML = '';
+
+            b = -1;
+        }
 };

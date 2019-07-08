@@ -3,26 +3,28 @@
 <head>
     <title>nandesuka</title>
     <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC|Overpass:100,300,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Overpass:100,300,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
     <div class="container">
-        <div class="top-section">
-            <h2>what is this?</h2>
-            <button type="button" id="start">Start</button>
-            <div class="object-image">
+        <div class="row">
+            <div class="col-6 play">
+                <h2>what's this</h2>
+                <button type="button" id="start">Start</button>
+                <div class="object-image">
+                </div>
+                <h6>Your guess</h6>
+                <div id="player-guess"></div>
+                <p id="displaymsg"></p>
+                <button type="button" id="next">Next</button>
+            </div>
+            <div class="col-6 gameboard">
             </div>
         </div>
-        <div class="gameboard">
-        </div>
-        <div class="bottom-section">
-            <h6>Your guess</h6>
-            <div id="player-guess"></div>
-            <p id="displaymsg"></p>
-            <button type="button" id="next">Next</button>
-        </div>
-    <div>
+    </div>
 <script src="script.js"></script>
 </body>
 </html>
