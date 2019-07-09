@@ -10,41 +10,55 @@ body{
 }
 
 .row{
-	margin-top: 80px;
+	margin-top: 10px;
 	text-align: center;
 }
 
-#lastsect{
+/*#lastsect{
 	margin-top: 0px;
 	text-align: center;
-}
+}*/
 
 .title{
 	font-family: 'Krona One', sans-serif;
-	color:#E20377;
+	color:#7FB4F2;
 	text-transform: uppercase;
 	font-size: 45px;
+	margin-bottom: 0px;
+	margin-top: 20px;
+}
+
+.subtitle{
+	font-family: 'Overpass', sans-serif;
+	color: #024DA5;
+	text-transform: lowercase;
+	font-size: 22px;
+	font-weight: bold;
+	font-style: italic;
+	margin-top: -5px;
+	margin-bottom: 0px;
 
 }
 
-.object-image {
+#object-image {
 	width: 330px;
 	height: 280px;
 	text-align: center;
-	margin: 5px auto;
+	margin: -2px auto;
 	padding-bottom: 8px;
-	padding-top: 8px;
+	padding-top: 2px;
 }
 
 .img {
-	width: 300px;
-	height: 250px;
-	margin: 5px auto;
+	width: 320px;
+	height: 280px;
+	margin: 0 auto;
+	border-radius: 50%;
 }
 
-#hint {
+#hintmsg {
 /*	background-color: #FAF5E6;*/
-	display: inline;
+	display: inline-flex;
 	font-family: 'Overpass', sans-serif;
 	text-transform: lowercase;
 	width: 100px;
@@ -53,18 +67,20 @@ body{
 	text-align: left;
 	color: #0C8203;
 	font-style: italic;
+	margin-bottom: 0px;
 }
 
 #player-guess {
 	visibility: hidden;
 	display: inline-block;
-	background-color: #FAF5E6;
-	width: 150px;
-	height: 45px;
+	background-color: #767776;
+	width: 80%;
+	height: 40px;
 	font-size: 28px;
 	text-align: center;
-	color: #0563D0;
+	color: #E7E7E7;
 	margin-top: 10px;
+	border-radius: 2%;
 }
 
 #displaymsg {
@@ -83,20 +99,21 @@ body{
 	color: #E20377;
 }
 
-.gameboard {
+#gameboard {
 /*	width: 700px;*/
 	height: 450px;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: center;
-	margin: 0 auto;
+	margin: 70px auto 0;
 }
 
 .square {
 	width: 9%;
+	background-color: #FCE7D2;
 	height: 50px;
-	border: 1px solid #E08210;
+/*	border: 0.5px solid #DF7A01;*/
 	border-radius: 10%;
 	margin: 2px;
 	color: #443D40;;
@@ -106,19 +123,56 @@ body{
 }
 
 .square:hover {
-  background-color: #E4FB43;
+  background-color: #CAE128;
 }
 
 /*buttons*/
 #start{
-
+	margin-top: 5px;
 }
 
 #hintbutton {
 	visibility: hidden;
-	display: inline;
+	text-align: center;
 }
 
 #next{
 	visibility: hidden;
+	display: inline-block;
+}
+
+table, td {
+	width: 100%;
+  border: 0.5px solid #D0D1C9;
+  table-layout: fixed;
+}
+
+td{
+	text-align: center;
+	vertical-align: middle;
+}
+
+#helpbutton {
+	background-color: #FAFAFA;
+	color: black;
+	border: white;
+	height: 30px;
+	padding-top: 5px;
+	font-size: 16px;
+}
+
+#helprow {
+	visibility: hidden;
+	display: flex;
+	justify-content: flex-end;
+	margin-top: -34px;
+	margin-right: 0px;
+}
+
+#hint {
+	display: inline-flex;
+	justify-content: center;
+	margin-top: 0px;
+	margin-left: -140px;
+	margin-right: 10px;
 }

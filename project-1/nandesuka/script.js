@@ -105,8 +105,8 @@ var kataChar = {
     29: 'テ',
     30: 'ト',
     31: 'ダ',
-    32: 'ジ',
-    33: 'ズ',
+    32: 'ヂ',
+    33: 'ヅ',
     34: 'デ',
     35: 'ド',
     36: 'ナ',
@@ -161,12 +161,19 @@ var wordsArray = [
 [['a','me','ri','ka'],['ra','-','me','n'],['ko','n','bi','ni'],['yu','ni','ku','ro'], ['ke','-','ta','i'],['ra','be','n','da','-']]
 ];
 
+var wordsKataArray = [
+[['ラムネ'],['アニメ'],['サラダ'],['ホテル'],['ケーキ']],
+[['アメリカ'],['ラーメン'],['コンビニ'],['ユニクロ'], ['ケータイ'],['ラベンダー']]
+];
+
 var playerGuess =[];
 var currentWord;
+var currentWordKata;
 var currentImage;
 var currentLevel = 1;;
 var numTries = 0;
 var correctLetter = 0;
+var numCorrect = 0;
 var m = 0;
 var b = 0;
 
@@ -174,16 +181,19 @@ var b = 0;
 function showImage() {
         currentImage = document.createElement('img');
         currentImage.src = objectImages[0][0];
-        document.querySelector('.object-image').appendChild(currentImage);
+        document.querySelector('#object-image').appendChild(currentImage);
         currentImage.className = 'img';
         currentWord = wordsArray[0][0];
+        currentWordKata = wordsKataArray[0][0];
         console.log(currentWord);
 };
 
 //function to display the squares and add event listener
 var showBoard = function() {
+    document.querySelector('#start').style.visibility = 'hidden';
     document.querySelector('#hintbutton').style.visibility = 'visible';
     document.querySelector('#player-guess').style.visibility = 'visible';
+    document.querySelector('#helpbutton').style.visibility = 'visible';
     for (var k = 1; k < 73; k++) {
         var square = document.createElement('div');
         console.log('create square ' +k);
@@ -191,12 +201,16 @@ var showBoard = function() {
         square.id = k;
         square.value = kataEng[k];
         console.log(square.value);
-        document.querySelector('.gameboard').appendChild(square);
+        document.querySelector('#gameboard').appendChild(square);
         square.innerHTML = kataChar[k];
         console.log(kataChar[k]);
         square.addEventListener('click',checkLetter);
     }
 };
+
+var currentWordKata = function() {
+
+}
 
 //click start button to display image, set word show board
 document.querySelector('#start').addEventListener('click', showImage);
@@ -212,6 +226,11 @@ var checkLetter = function() {
 //check if number of tries more than number of letters
     if (numTries > currentWord.length+1) {
         console.log('lose');
+        document.querySelector('#player-guess').innerHTML = currentWordKata;
+        document.querySelector('#hintbutton').style.visibility = 'hidden';
+        document.querySelector('#hintmsg').innerHTML = currentWord.join('');
+        document.querySelector('#hintmsg').style.visibility = 'visible';
+        document.querySelector('#helpbutton').style.visibility = 'hidden';
         document.querySelector('#next').style.visibility = 'visible';
         document.querySelector('#displaymsg').style.visibility = 'visible';
         document.querySelector('#displaymsg').innerHTML = 'too many tries! Go on to next word.';
@@ -230,9 +249,12 @@ var checkLetter = function() {
                 document.querySelector('#player-guess').innerHTML += this.textContent;
                 m = m + 1;
                 if (correctLetter === currentWord.length) {
-                    console.log('win');
+                    numCorrect++;
+                    console.log('win ' +numCorrect);
                     document.querySelector('#next').style.visibility = 'visible';
                     document.querySelector('#displaymsg').style.visibility = 'visible';
+                    document.querySelector('#hintbutton').style.visibility = 'hidden';
+                    document.querySelector('#helpbutton').style.visibility = 'hidden';
                     document.querySelector('#displaymsg').innerHTML = 'you got it!';
                 }
             }
@@ -255,9 +277,17 @@ var checkLetter = function() {
 
 //function to show hint
 var showHint = function() {
+    document.querySelector('#hintmsg').style.visibility = 'visible';
     console.log('it works');
     console.log(currentWord);
-    document.querySelector('#hint').innerHTML = currentWord.join('');
+    document.querySelector('#hintmsg').innerHTML = currentWord.join('');
+    setTimeout(hideHint, 1000);
+    console.log('hiding?');
+};
+
+var hideHint = function() {
+    document.querySelector('#hintmsg').style.visibility = 'hidden';
+    console.log('hidden');
 };
 
 document.querySelector('#hintbutton').addEventListener('click', showHint);
@@ -267,11 +297,15 @@ var changeImage = function() {
         m = 0;
         b = b + 1;
         console.log('b = '+b);
-        document.querySelector('#hint').innerHTML = '';
+        document.querySelector('#hintmsg').innerHTML = '';
+        document.querySelector('#hintbutton').style.visibility = 'visible';
+        document.querySelector('#player-guess').style.visibility = 'visible';
+        document.querySelector('#helpbutton').style.visibility = 'visible';
         if (b < objectImages[currentLevel-1].length) {
             console.log(currentLevel);
             currentImage.src = objectImages[currentLevel-1][b];
             currentWord = wordsArray[currentLevel-1][b];
+            currentWordKata = wordsKataArray[currentLevel-1][b];
             console.log(currentWord);
             document.querySelector('#next').style.visibility = 'hidden';
             document.querySelector('#displaymsg').style.visibility = 'hidden';
@@ -284,9 +318,13 @@ var changeImage = function() {
         else if(b === objectImages[currentLevel-1].length) {
             currentLevel++;
             console.log('current level' + currentLevel);
-            document.querySelector('#displaymsg').innerHTML = 'progress to level ' + currentLevel;
-            document.querySelector('#player-guess').innerHTML = '';
+            //show current level score
+            document.querySelector('#displaymsg').innerHTML = 'you scored ' + numCorrect + '/' + b + '. progress to level ' + currentLevel;
+            document.querySelector('#player-guess').style.visibility = 'hidden';
+            document.querySelector('#hintbutton').style.visibility = 'hidden';
+            document.querySelector('#helpbutton').style.visibility = 'hidden';
             b = -1;
+            numCorrect = 0;
         }
 };
 
